@@ -4,6 +4,10 @@ const router = require('express').Router();
 
 const OK = 200;
 
+const send = (res, code, data, json = true) => { //send a response
+  res.status(code).send(json ? JSON.stringify(data) : data);
+};
+
 module.exports = (db) => {
   router.get('/', (req, res) => {
     return db.quotes.list()
