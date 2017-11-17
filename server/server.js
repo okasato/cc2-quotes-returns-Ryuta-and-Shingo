@@ -23,7 +23,7 @@ app.use('/api/', [//add additional middleware to the server, mounted on the /api
 ]);
 
 if (process.env.NODE_ENV !== 'test') {
-  //run morgan middelware's development mode; detailed, colored dev log
+  // run morgan middelware's development mode; detailed, colored dev log
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
   // this might be a good place to put your ejs if you make it to the advanced requirements
   // app.use(express.static(path.join(__dirname, '../public')));

@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 3000;
 
 const fs = require('fs');
 const quotes = require('./quotes.json');
-const app = require('../server.js');
+const app = require('../server/server.js');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const chalk = require('chalk');
@@ -16,12 +16,12 @@ app.listen(PORT, () => console.log(
 
 chai.use(chaiHttp);
 
-describe('GET /api/quotes', () => {
+describe('GET /api/', () => {
   let status, response, quotes;
 
   before(done => {
     chai.request(app)
-      .get('/api/quotes')
+      .get('/api/')
       .set(
       'Content-Type', 'application/json'
       )
