@@ -8,7 +8,6 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .index();
     table.integer('author_id')
-      .unique()
       .index();
   }); 
 };
