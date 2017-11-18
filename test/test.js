@@ -46,7 +46,6 @@ describe('GET /api/', () => {
 
 
   it('should have a "id", "quote" and "author" property containing an array.', done => {
-    console.log(response);
     for (let quote of response) {
       quote.should.be.an('object');
       quote.should.have.a.property('id');

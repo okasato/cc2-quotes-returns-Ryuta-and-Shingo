@@ -4,7 +4,6 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: [
-    // 'webpack/hot/only-dev-server',
     `${path.resolve(__dirname, 'src')}/index.jsx`
   ],
   output: {
@@ -23,7 +22,11 @@ module.exports = {
         }
       },
     ]
-  }
+  },
+  // plugins: [
+  //   new OpenBrowserPlugin({ url: 'http://localhost:8080' })
+  // ]
+
   // module: {
   //   loaders: [
   //     {

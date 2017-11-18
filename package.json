@@ -13,6 +13,7 @@
   "repository": "https://github.com/okasato/cc2-quotes-returns-Ryuta-and-Shingo.git",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
     "eslint": "^4.11.0",
