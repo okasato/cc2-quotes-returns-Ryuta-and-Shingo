@@ -1,9 +1,15 @@
 module.exports = (knex) => {
   return () => {
-    console.log("---inside quotes/list")
-    return knex('quotes').select()
+    return knex('quotes')
+      .innerJoin('authors', 'quotes.author_id', 'authors.id')
+      .select(
+        'quotes.id as id',
+        'quotes.quote as quote',
+        'authors.name as author'
+      )
     .catch((err) => {
       console.log(err);
     });
   }
 };
+

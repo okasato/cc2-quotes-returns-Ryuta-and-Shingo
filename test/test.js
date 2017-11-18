@@ -30,37 +30,42 @@ describe('GET /api/', () => {
         response = res.text;
         done();
       });
+    });
+    
+    it('should return status 200.', done => {
+      status.should.equal(200);
+      done();
+    });
+    
+    it('should be a JSON object.', done => {
+      response.should.be.a('string');
+      response = JSON.parse(response);
+      response.should.be.an('array');
+      done();
   });
 
-  it('should return status 200.', done => {
-    status.should.equal(200);
-    done();
-  });
 
-  xit('should be a JSON object.', done => {
-    response.should.be.a('string');
-    response = JSON.parse(response);
-    response.should.be.an('object');
-    done();
-  });
-
-
-  xit('should have a "quotes" property containing an array.', done => {
-    response.should.have.a.property('quotes').that.is.an('array');
-    quotes = response.quotes;
-    done();
-  });
-
-  xit('should contain only quotes with both "text" and an "author".', done => {
-    for (let quote of quotes) {
+  it('should have a "id", "quote" and "author" property containing an array.', done => {
+    console.log(response);
+    for (let quote of response) {
       quote.should.be.an('object');
-      quote.should.have.a.property('text');
+      quote.should.have.a.property('id');
+      quote.should.have.a.property('quote')
       quote.should.have.a.property('author');
-      quote.text.should.not.equal('');
-      quote.author.should.not.equal('');
     }
     done();
   });
+
+  // xit('should contain only quotes with both "text" and an "author".', done => {
+  //   for (let quote of quotes) {
+  //     quote.should.be.an('object');
+  //     quote.should.have.a.property('text');
+  //     quote.should.have.a.property('author');
+  //     quote.text.should.not.equal('');
+  //     quote.author.should.not.equal('');
+  //   }
+  //   done();
+  // });
 
   xit('should allow an author parameter.', done => {
     chai.request(app)
