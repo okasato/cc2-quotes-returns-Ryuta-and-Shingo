@@ -15,7 +15,6 @@ const bodyParser = require('body-parser'); //used for parsing requests
 const db = require('./db');
 const apiRouter = require('./router/api')(db);
 
-console.log('Im working'),
 app.all("*",(req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
