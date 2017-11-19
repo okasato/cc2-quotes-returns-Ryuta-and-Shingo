@@ -55,17 +55,6 @@ describe('GET /api/', () => {
     done();
   });
 
-  // xit('should contain only quotes with both "text" and an "author".', done => {
-  //   for (let quote of quotes) {
-  //     quote.should.be.an('object');
-  //     quote.should.have.a.property('text');
-  //     quote.should.have.a.property('author');
-  //     quote.text.should.not.equal('');
-  //     quote.author.should.not.equal('');
-  //   }
-  //   done();
-  // });
-
   xit('should allow an author parameter.', done => {
     chai.request(app)
       .get('/api/quotes?author=\'\'')
@@ -132,23 +121,23 @@ xdescribe('GET /api/quotes/random', () => {
 
 describe('POST/PUT Tests', () => {
   // This is to make sure each test is run under with the same starting data
-  const quotesFile = './server/data/quotes.txt';
-  const quotesBackup = quotesFile + '.bak';
+  // const quotesFile = './server/data/quotes.txt';
+  // const quotesBackup = quotesFile + '.bak';
 
-  beforeEach(() => {
-    fs.createReadStream(quotesFile).pipe(fs.createWriteStream(quotesBackup));
-  });
+  // beforeEach(() => {
+  //   fs.createReadStream(quotesFile).pipe(fs.createWriteStream(quotesBackup));
+  // });
 
-  afterEach(() => {
-    fs.createReadStream(quotesBackup).pipe(fs.createWriteStream(quotesFile));
-    fs.unlinkSync(quotesBackup);
-  });
+  // afterEach(() => {
+  //   fs.createReadStream(quotesBackup).pipe(fs.createWriteStream(quotesFile));
+  //   fs.unlinkSync(quotesBackup);
+  // });
 
-  xdescribe('POST /api/quotes', () => {
+  describe('POST /api/quotes', () => {
 
     before(done => {
       chai.request(app)
-        .put('/api/quotes')
+        .put('/api/')
         .set(
         'Content-Type', 'application/json'
         )
@@ -160,7 +149,7 @@ describe('POST/PUT Tests', () => {
 
     after(done => {
       chai.request(app)
-        .put('/api/quotes')
+        .put('/api/')
         .set(
         'Content-Type', 'application/json'
         )
@@ -175,7 +164,24 @@ describe('POST/PUT Tests', () => {
       "author": "Rick Sanchez"
     };
 
-    it('should return status 400 if "text" is empty.', done => {
+    it('should return true as a response.', done => {
+      chai.request(app)
+        .post('/api/')
+        .set(
+          'Content-Type', 'application/json'
+        )
+        .send({
+          quote: "ffff",
+          author: "ggggg"
+        })
+        .end((err, res) => {
+          // console.log(res, "@@@@@@@@@@@@@@@");
+          res.status.should.equal(400);
+          done();
+        })
+    });
+
+    xit('should return status 400 if "text" is empty.', done => {
       chai.request(app)
         .post('/api/quotes')
         .set(

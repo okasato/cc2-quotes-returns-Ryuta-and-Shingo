@@ -15,6 +15,13 @@ module.exports = (db) => {
         send(res, OK, quotes, false);
       });
   });
+  router.post('/', (req, res)=> {
+    return db.quotes.create(req.body)
+    .then(quote => {
+        // console.log('@@@@@', quote);
+      })
+  })
+
 
   return router;
 };
