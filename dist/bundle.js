@@ -18504,13 +18504,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Create = function (_Component) {
   _inherits(Create, _Component);
 
-  function Create() {
+  function Create(props) {
     _classCallCheck(this, Create);
 
-    return _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this, props));
+
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(Create, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+
+      var data = {
+        quote: this.refs.quote.value,
+        author: this.refs.author.value
+      };
+      console.log(JSON.stringify(data));
+
+      fetch('http://localhost:1337/api', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        })
+      }).then(function (res) {
+        console.log(res, "=== inside FE promise return");
+      }).then(function (body) {
+        console.log(body);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(

@@ -2,6 +2,38 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class Create extends Component {
+  constructor(props){
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    
+    const data = {
+        quote: this.refs.quote.value,
+        author: this.refs.author.value
+      };
+    console.log(JSON.stringify(data));  
+
+    fetch('http://localhost:1337/api', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      })
+    })
+      .then(res => {
+        console.log(res, "=== inside FE promise return");
+      }).then(body => {
+        console.log(body);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
   render(){
     return (
       <div className="create">

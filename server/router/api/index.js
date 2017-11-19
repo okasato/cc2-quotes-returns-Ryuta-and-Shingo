@@ -16,10 +16,11 @@ module.exports = (db) => {
       });
   });
   router.post('/', (req, res)=> {
+    // console.log(req.body, req.params, "==================");
     return db.quotes.create(req.body)
     .then(quote => {
-        // console.log('@@@@@', quote);
-      })
+      send(res, OK, quote, false);
+    })
   })
 
 

@@ -1,5 +1,6 @@
 module.exports = (knex) => {
   return (data) => {
+    console.log(data);
     return knex('authors')
       .returning('id')
       .insert({name: data.author})
