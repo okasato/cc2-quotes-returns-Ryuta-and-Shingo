@@ -14,7 +14,6 @@ export default class Create extends Component {
         quote: this.refs.quote.value,
         author: this.refs.author.value
       };
-    console.log(JSON.stringify(data));  
 
     fetch('http://localhost:1337/api', {
       method: 'POST',
@@ -46,7 +45,7 @@ export default class Create extends Component {
             Author:
             <input type="text" name='author' ref='author' />
           </label>
-          <input type="submit" />
+          <input type="submit" value="create"/>
         </form>
       </div>
     );

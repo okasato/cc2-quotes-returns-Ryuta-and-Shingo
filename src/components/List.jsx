@@ -20,7 +20,7 @@ export default class List extends Component {
             {this.props.quotesList.map((data, index) => {
               return (
                 <li key={index}>
-                  {'quote: ' + data.quote + ' author: ' + data.author}
+                  {'No. ' + data.id + ' quote: ' + data.quote + ' author: ' + data.author}
                 </li>
               )
             })}

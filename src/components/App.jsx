@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import List from './List.jsx';
 import { getQuotesList } from '../utils/index.js';
-import Create from './Create.jsx'
+import Create from './Create.jsx';
+import Delete from './Delete.jsx';
 
 export default class App extends Component {
   constructor(props){
@@ -26,7 +27,6 @@ export default class App extends Component {
   }
 
   getQuotes(){
-    console.log("I am in getQuotes")
     return getQuotesList();    
   }
 
@@ -35,6 +35,7 @@ export default class App extends Component {
     return (
       <div className="app">
         <Create />
+        <Delete />
         <List 
           quotesList = {this.state.quotesList}
           loading = {this.state.loading}
