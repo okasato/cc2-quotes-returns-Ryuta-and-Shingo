@@ -28,6 +28,13 @@ module.exports = (db) => {
       send(res, OK, row, false);
     })
   })
+  router.put('/', (req, res) => {
+    return db.quotes.update(req.body)
+    .then(quote => {
+      quote = String(quote);
+      send(res, OK, quote, false);
+    })
+  })
 
   return router;
 };

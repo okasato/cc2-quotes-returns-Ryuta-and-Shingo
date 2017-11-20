@@ -5,7 +5,8 @@ module.exports = (knex) => {
       .insert({name: data.author})
     .then((id) => {
       return knex('quotes')
-       .insert({quote: data.quote, author_id: id[0]}) 
+       .where('id', data.index)
+       .update({quote: data.quote, author_id: id[0]}) 
     })
   }
 };

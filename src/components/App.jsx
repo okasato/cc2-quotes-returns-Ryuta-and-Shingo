@@ -4,6 +4,7 @@ import List from './List.jsx';
 import { getQuotesList } from '../utils/index.js';
 import Create from './Create.jsx';
 import Delete from './Delete.jsx';
+import Update from './Update.jsx';
 
 export default class App extends Component {
   constructor(props){
@@ -14,11 +15,16 @@ export default class App extends Component {
       selectedQuote: null,
       loading: false
     }
+    this.getQuotes = this.getQuotes.bind(this);
   }
 
   componentDidMount(){
     this.getQuotes()
-      .then(quotesList => {
+  }
+
+  getQuotes(){
+    return getQuotesList()
+    .then(quotesList => {
         this.setState({
           quotesList,
           loading: true
@@ -26,15 +32,11 @@ export default class App extends Component {
       })
   }
 
-  getQuotes(){
-    return getQuotesList();    
-  }
-
-
   render(){
     return (
       <div className="app">
-        <Create />
+        <Create getQuotes={this.getQuotes}/>
+        <Update />
         <Delete />
         <List 
           quotesList = {this.state.quotesList}

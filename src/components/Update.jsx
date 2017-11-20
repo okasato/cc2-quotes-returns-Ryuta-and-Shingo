@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Create extends Component {
+export default class Update extends Component {
   constructor(props){
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
-  handleSubmit(event) {
+  handleUpdate(event) {
     event.preventDefault();
     
     const data = {
-        quote: this.refs.quote.value,
-        author: this.refs.author.value
-      };
+      index: this.refs.index.value,
+      quote: this.refs.quote.value,
+      author: this.refs.author.value
+    };
 
     fetch('http://localhost:1337/api', {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
       headers: new Headers({
         'Content-Type': 'application/json',
         Accept: 'application/json',
       })
     })
-      .then(res => {
-        console.log(res.json(), "=== inside FE promise return");
-        this.props.getQuotes()
+      .then(body => {
+        console.log(body);
       })
       .catch((err) => {
         console.log(err);
@@ -34,8 +34,12 @@ export default class Create extends Component {
 
   render(){
     return (
-      <div className="create">
-        <form onSubmit={this.handleSubmit} >
+      <div className="update">
+        <form onSubmit={this.handleUpdate} >
+        <label>
+            Index:
+            <input type="number" name='index' ref='index' />
+          </label>
           <label>
             Qoute:
             <input type="text" name='quote' ref='quote' />
@@ -44,7 +48,7 @@ export default class Create extends Component {
             Author:
             <input type="text" name='author' ref='author' />
           </label>
-          <input type="submit" value="create"/>
+          <input type="submit" value="update"/>
         </form>
       </div>
     );

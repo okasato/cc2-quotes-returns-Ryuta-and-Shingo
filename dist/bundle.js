@@ -18298,6 +18298,10 @@ var _Delete = __webpack_require__(32);
 
 var _Delete2 = _interopRequireDefault(_Delete);
 
+var _Update = __webpack_require__(33);
+
+var _Update2 = _interopRequireDefault(_Update);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18320,15 +18324,21 @@ var App = function (_Component) {
       selectedQuote: null,
       loading: false
     };
+    _this.getQuotes = _this.getQuotes.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getQuotes();
+    }
+  }, {
+    key: 'getQuotes',
+    value: function getQuotes() {
       var _this2 = this;
 
-      this.getQuotes().then(function (quotesList) {
+      return (0, _index.getQuotesList)().then(function (quotesList) {
         _this2.setState({
           quotesList: quotesList,
           loading: true
@@ -18336,17 +18346,13 @@ var App = function (_Component) {
       });
     }
   }, {
-    key: 'getQuotes',
-    value: function getQuotes() {
-      return (0, _index.getQuotesList)();
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'app' },
-        _react2.default.createElement(_Create2.default, null),
+        _react2.default.createElement(_Create2.default, { getQuotes: this.getQuotes }),
+        _react2.default.createElement(_Update2.default, null),
         _react2.default.createElement(_Delete2.default, null),
         _react2.default.createElement(_List2.default, {
           quotesList: this.state.quotesList,
@@ -18494,6 +18500,8 @@ var Create = function (_Component) {
   _createClass(Create, [{
     key: 'handleSubmit',
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
 
       var data = {
@@ -18509,9 +18517,8 @@ var Create = function (_Component) {
           Accept: 'application/json'
         })
       }).then(function (res) {
-        console.log(res, "=== inside FE promise return");
-      }).then(function (body) {
-        console.log(body);
+        console.log(res.json(), "=== inside FE promise return");
+        _this2.props.getQuotes();
       }).catch(function (err) {
         console.log(err);
       });
@@ -18638,6 +18645,109 @@ var Delete = function (_Component) {
 }(_react.Component);
 
 exports.default = Delete;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Update = function (_Component) {
+  _inherits(Update, _Component);
+
+  function Update(props) {
+    _classCallCheck(this, Update);
+
+    var _this = _possibleConstructorReturn(this, (Update.__proto__ || Object.getPrototypeOf(Update)).call(this, props));
+
+    _this.handleUpdate = _this.handleUpdate.bind(_this);
+    return _this;
+  }
+
+  _createClass(Update, [{
+    key: 'handleUpdate',
+    value: function handleUpdate(event) {
+      event.preventDefault();
+
+      var data = {
+        index: this.refs.index.value,
+        quote: this.refs.quote.value,
+        author: this.refs.author.value
+      };
+
+      fetch('http://localhost:1337/api', {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        })
+      }).then(function (body) {
+        console.log(body);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'update' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleUpdate },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Index:',
+            _react2.default.createElement('input', { type: 'number', name: 'index', ref: 'index' })
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Qoute:',
+            _react2.default.createElement('input', { type: 'text', name: 'quote', ref: 'quote' })
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Author:',
+            _react2.default.createElement('input', { type: 'text', name: 'author', ref: 'author' })
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: 'update' })
+        )
+      );
+    }
+  }]);
+
+  return Update;
+}(_react.Component);
+
+exports.default = Update;
 
 /***/ })
 /******/ ]);
